@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Frugal.Data;
 using Frugal.Dtos;
 using Frugal.Models;
@@ -16,21 +17,20 @@ namespace Frugal.Controllers
     {
         private FrugalContext DbContext { get; }
 
+        private IMapper Mapper { get; }
+
         /// <summary>
         /// Constructs a new BudgetsController
         /// </summary>
         /// <param name="dbContext">The FrugalContext with which to update the databse.</param>
-        public BudgetsController(FrugalContext dbContext)
+        public BudgetsController(FrugalContext dbContext, IMapper mapper)
         {
             DbContext = dbContext;
+            Mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<BudgetDto>> GetBudgetsAsync()
-        {
-            var dtoBudgets = DbContext.Budgets.Select(b => new BudgetDto(b.Name) { Id = b.Id });
-            return await dtoBudgets.ToListAsync();
-        }
+        public IEnumerable<BudgetDto> GetBudgetsAsync() => DbContext.Budgets.Select(Mapper.Map<Budget, BudgetDto>);
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBudgetByIdAsync(int id)
@@ -41,14 +41,14 @@ namespace Frugal.Controllers
                 return NotFound();
 
             // Return the DTO version of the budget
-            return Ok(new BudgetDto(budget.Name) { Id = budget.Id });
+            return Ok(Mapper.Map<BudgetDto>(budget));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBudgetAsync(BudgetDto budget)
         {
             // Create the DB Model form of the budget
-            var newBudget = new Budget(budget.Name);
+            Budget newBudget = Mapper.Map<Budget>(budget);
 
             // Add and save the changes
             await DbContext.Budgets.AddAsync(newBudget);
@@ -58,15 +58,15 @@ namespace Frugal.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBudgetAsync(int id, BudgetDto budget)
+        public async Task<IActionResult> UpdateBudgetAsync(BudgetDto budget)
         {
             // Get the budget using the supplied id
-            var existingBudget = await DbContext.Budgets.FirstOrDefaultAsync(b => b.Id == id);
+            var existingBudget = await DbContext.Budgets.FirstOrDefaultAsync(b => b.Id == budget.Id);
             if (existingBudget == null)
                 return NotFound();
 
             // Update the DB model
-            existingBudget.Name = budget.Name;
+            Mapper.Map(budget, existingBudget);
             DbContext.SaveChanges();
 
             return Ok();
