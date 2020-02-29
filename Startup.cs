@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Frugal
 {
@@ -31,6 +32,8 @@ namespace Frugal
             });
 
             services.AddAutoMapper(config => config.AddProfile(new MappingProfile()), Assembly.GetExecutingAssembly());
+
+            services.AddSwaggerGen(config => config.SwaggerDoc("v1", new OpenApiInfo { Title = "Frugal API", Version = "v1" }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +45,10 @@ namespace Frugal
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(config => config.SwaggerEndpoint("/swagger/v1/swagger.json", "Frugal API v1.0.0"));
 
             app.UseRouting();
 
