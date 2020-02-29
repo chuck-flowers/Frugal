@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +32,7 @@ namespace Frugal.Controllers
         public IEnumerable<BudgetDto> GetBudgetsAsync() => DbContext.Budgets.Select(Mapper.Map<Budget, BudgetDto>);
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBudgetByIdAsync(int id)
+        public async Task<ActionResult<BudgetDto>> GetBudgetByIdAsync(int id)
         {
             // Get the budget using the provided id
             var budget = await DbContext.Budgets.FirstOrDefaultAsync(b => b.Id == id);
