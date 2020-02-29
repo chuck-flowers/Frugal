@@ -4,8 +4,14 @@ using Frugal.Models;
 
 namespace Frugal.Mappings
 {
+    /// <summary>
+    /// Defines the mappings between the Frugal types.
+    /// </summary>
     public class MappingProfile : Profile
     {
+        /// <summary>
+        /// Constructs a new instance of the mapping profile.
+        /// </summary>
         public MappingProfile()
         {
             CreateMap<Budget, BudgetDto>();
