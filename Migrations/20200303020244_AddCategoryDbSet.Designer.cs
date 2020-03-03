@@ -2,14 +2,16 @@
 using Frugal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Frugal.Migrations
 {
     [DbContext(typeof(FrugalContext))]
-    partial class FrugalContextModelSnapshot : ModelSnapshot
+    [Migration("20200303020244_AddCategoryDbSet")]
+    partial class AddCategoryDbSet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
