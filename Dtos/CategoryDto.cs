@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Frugal.Dtos
 {
     /// <summary>
@@ -13,6 +15,8 @@ namespace Frugal.Dtos
         /// <summary>
         /// The user-friendly display name of the category.
         /// </summary>
+        [Required]
+        [MinLength(1)]
         public string Name { get; set; } = null!;
     }
 }
