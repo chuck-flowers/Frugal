@@ -80,7 +80,8 @@ namespace Frugal.Controllers
             await DbContext.Categories.AddAsync(dbCategory);
             await DbContext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(CreateCategoryAsync), new { id = category.Id }, category);
+            category.Id = dbCategory.Id;
+            return CreatedAtAction(nameof(GetCategoryById), new { id = dbCategory.Id }, category);
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace Frugal.Controllers
         /// <param name="id">The id of the category to delete.</param>
         /// <response code="200">The category was successfully deleted.</response>
         /// <response code="404">No category with the provided id could be found.</response>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCategoryAsync(int id)
