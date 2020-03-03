@@ -18,5 +18,10 @@ namespace Frugal.Data
         /// The database set of Budget objects within the database.
         /// </summary>
         public DbSet<Budget> Budgets { get; set; } = null!;
+
+        /// <summary>
+        /// The database set of Category objects within the database.
+        /// </summary>
+        public DbSet<Category> Categories { get; set; } = null!;
     }
 }
