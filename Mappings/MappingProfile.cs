@@ -18,6 +18,8 @@ namespace Frugal.Mappings
             CreateMap<BudgetDto, Budget>();
             CreateMap<Category, CategoryDto>();
             CreateMap<CategoryDto, Category>();
+            CreateMap<Business, BusinessDto>();
+            CreateMap<BusinessDto, Business>();
         }
     }
 }
