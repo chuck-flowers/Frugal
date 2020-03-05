@@ -20,13 +20,18 @@ namespace Frugal.Data
         public DbSet<Budget> Budgets { get; set; } = null!;
 
         /// <summary>
+        /// The databse set of Business objects within the database.
+        /// </summary>
+        public DbSet<Business> Businesses { get; set; } = null!;
+
+        /// <summary>
         /// The database set of Category objects within the database.
         /// </summary>
         public DbSet<Category> Categories { get; set; } = null!;
 
         /// <summary>
-        /// The databse set of Business objects within the database.
+        /// The database set of Transaction objects within the database.
         /// </summary>
-        public DbSet<Business> Businesses { get; set; } = null!;
+        public DbSet<Transaction> Transactions { get; set; } = null!;
     }
 }
